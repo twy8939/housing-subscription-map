@@ -3,7 +3,7 @@ import React from "react";
 
 export default function SidebarHeader() {
   return (
-    <div>
+    <div className="border-b">
       <div className="py-6 w-full flex justify-center items-center">
         <div className="w-full px-4">
           <SearchInput />

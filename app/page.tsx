@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <>
       {/* <Header /> */}
-      <SideBar />
       <main className="w-full h-screen">
+        <SideBar />
         <MapSection />
       </main>
     </>

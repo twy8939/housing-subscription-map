@@ -1,0 +1,3 @@
+interface IApplyHomeListProps {
+  item: IApplyHomeItem;
+}

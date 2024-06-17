@@ -1,8 +1,6 @@
 import React from "react";
 
 export default async function ApplyHomeListItem({ item }: IApplyHomeListProps) {
-  console.log(item);
-
   return (
     <li className="p-6 border-b space-y-1">
       <div className="flex items-center gap-2">
@@ -26,14 +24,18 @@ export default async function ApplyHomeListItem({ item }: IApplyHomeListProps) {
         >
           상세보기
         </a>
-        <span className="bg-gray-300 rounded-full w-[3px] h-[3px]" />
-        <a
-          href={item.HMPG_ADRES}
-          target="_blank"
-          className="text-xs text-blue-500"
-        >
-          홈페이지
-        </a>
+        {item.HMPG_ADRES && (
+          <>
+            <span className="bg-gray-300 rounded-full w-[3px] h-[3px]" />
+            <a
+              href={item.HMPG_ADRES}
+              target="_blank"
+              className="text-xs text-blue-500"
+            >
+              홈페이지
+            </a>
+          </>
+        )}
       </div>
     </li>
   );

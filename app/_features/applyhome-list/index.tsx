@@ -9,7 +9,7 @@ async function ApplyHomeList() {
     <div className="flex-1 overflow-hidden overflow-y-auto">
       <ul className="list-none">
         {data.data.map((item: IApplyHomeItem) => {
-          return <ApplyHomeListItem key={item.PBLANC_NO} item={item} />;
+          return <ApplyHomeListItem key={item.HOUSE_MANAGE_NO} item={item} />;
         })}
       </ul>
     </div>

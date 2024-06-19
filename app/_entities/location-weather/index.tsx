@@ -4,9 +4,10 @@ import { find } from "lodash";
 import { SKY_CODE } from "./constants";
 
 export default async function LocationWeather() {
-  const data: IWeatherInfo = await fetchWeatherInfo();
-  const air = find(data.response.body.items.item, ["category", "SKY"]);
-  const temper = find(data.response.body.items.item, ["category", "T1H"]);
+  const data = await fetchWeatherInfo();
+
+  const air = find(data, ["category", "SKY"]);
+  const temper = find(data, ["category", "T1H"]);
 
   return (
     <div className="text-xs flex gap-2 my-1">

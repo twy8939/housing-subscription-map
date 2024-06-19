@@ -7,11 +7,11 @@ export const fetchWeatherInfo = async () => {
 
   const params = {
     serviceKey,
-    numOfRows: "100",
+    numOfRows: "50",
     pageNo: "1",
     dataType: "JSON",
     base_date: dayjs().format("YYYYMMDD"),
-    base_time: "0500",
+    base_time: dayjs().subtract(30, "minute").format("HHmm"),
     nx: "55",
     ny: "127",
   };
@@ -21,9 +21,13 @@ export const fetchWeatherInfo = async () => {
 
   try {
     const response = await fetch(url);
-    const data = await response.json();
+    const data: IWeatherInfo = await response.json();
 
-    return data;
+    const filterData = data.response.body.items.item.filter(
+      (item) => item.fcstTime === `${dayjs().format("HH")}00`
+    );
+
+    return filterData;
   } catch (error) {
     console.error(error);
   }

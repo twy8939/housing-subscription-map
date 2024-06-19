@@ -1,17 +1,18 @@
 import { fetchWeatherInfo } from "@/app/_api/fetchWeatherInfo";
 import React from "react";
 import { find } from "lodash";
+import { SKY_CODE } from "./constants";
 
 export default async function LocationWeather() {
   const data: IWeatherInfo = await fetchWeatherInfo();
-
+  const air = find(data.response.body.items.item, ["category", "SKY"]);
   const temper = find(data.response.body.items.item, ["category", "T1H"]);
 
   return (
     <div className="text-xs flex gap-2 my-1">
       <div className="flex gap-1">
-        <span>구름많음</span>
-        <span className="font-bold">{temper?.obsrValue}˚</span>
+        <span>{air?.fcstValue ? SKY_CODE?.[air.fcstValue].label : "-"}</span>
+        <span className="font-bold">{temper?.fcstValue}˚</span>
         <span>어제보다 1℃ 낮아요</span>
       </div>
       <div className="flex gap-1">

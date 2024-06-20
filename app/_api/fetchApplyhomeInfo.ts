@@ -1,7 +1,7 @@
 export const fetchApplyhomeInfo = async () => {
   const baseUrl =
     "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1/getAPTLttotPblancDetail";
-  const serviceKey = process.env.NEXT_PUBLIC_MAP_SERVICE_KEY as string;
+  const serviceKey = process.env.NEXT_PUBLIC_API_SERVICE_KEY as string;
 
   const params = {
     serviceKey,

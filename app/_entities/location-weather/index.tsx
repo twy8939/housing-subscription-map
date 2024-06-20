@@ -3,12 +3,15 @@ import React from "react";
 import { find } from "lodash";
 import { SKY_CODE } from "./constants";
 import dayjs from "dayjs";
+import { fetchAirQualityInfo } from "@/app/_api/fetchAirQualityInfo";
 
 export default async function LocationWeather() {
   const yesterday = dayjs().subtract(1, "day");
 
   const todayWeather = await fetchWeatherInfo();
   const yesterdayWeather = await fetchWeatherInfo(yesterday);
+
+  const airQuality = await fetchAirQualityInfo();
 
   const air = Number(find(todayWeather, ["category", "SKY"])?.fcstValue);
   const temper = Number(find(todayWeather, ["category", "T1H"])?.fcstValue);
@@ -34,11 +37,11 @@ export default async function LocationWeather() {
       <div className="flex gap-1">
         <span>
           미세
-          <span className="text-blue-500 pl-1">좋음</span>
+          <span className="text-blue-500 pl-1">{airQuality?.pm10Value}</span>
         </span>
         <span>
           초미세
-          <span className="text-green-500 pl-1">보통</span>
+          <span className="text-green-500 pl-1">{airQuality?.pm25Value}</span>
         </span>
       </div>
     </div>

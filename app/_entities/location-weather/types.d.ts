@@ -1,11 +1,11 @@
-interface IWeatherInfo {
+interface IApiInfo<T> {
   response: {
-    header: IWeatherHeader;
-    body: IWeatherBody;
+    header: IApiHeader;
+    body: T;
   };
 }
 
-interface IWeatherHeader {
+interface IApiHeader {
   resultCode: string;
   resultMsg: string;
 }
@@ -27,4 +27,37 @@ interface IWeatherItem {
   fcstValue: string;
   nx: number;
   ny: number;
+}
+
+interface IAirQualityBody {
+  items: IAirQualityItem[];
+  pageNo: number;
+  numOfRows: number;
+  totalCount: number;
+}
+
+interface IAirQualityItem {
+  cityName: string;
+  cityNameEng: string;
+  coValue: string;
+  dataGubun: string;
+  dataTime: string;
+  districtCode: string;
+  districtNumSeq: string;
+  itemCode: string;
+  khaiValue: string;
+  no2Value: string;
+  numOfRows: string;
+  o3Value: string;
+  pageNo: string;
+  pm10Value: string;
+  pm25Value: string;
+  resultCode: string;
+  resultMsg: string;
+  returnType: string;
+  searchCondition: string;
+  serviceKey: string;
+  sidoName: string;
+  so2Value: string;
+  totalCount: string;
 }

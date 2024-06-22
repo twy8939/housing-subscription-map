@@ -11,7 +11,7 @@ export default function Map({ onLoad }: IMapProps) {
       center: new naver.maps.LatLng(37.3595704, 127.105399),
       zoom: 10,
       minZoom: 10,
-      scaleControl: false,
+      scaleControl: true,
       mapDataControl: false,
       logoControlOptions: {
         position: naver.maps.Position.BOTTOM_RIGHT,

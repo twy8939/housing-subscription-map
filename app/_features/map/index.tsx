@@ -7,20 +7,27 @@ export default function Map({ onLoad }: IMapProps) {
   const mapRef = useRef<NaverMap | null>(null);
 
   const initializeMap = () => {
-    const mapOptions = {
-      center: new naver.maps.LatLng(37.3595704, 127.105399),
-      zoom: 10,
-      minZoom: 10,
-      scaleControl: true,
-      mapDataControl: false,
-      logoControlOptions: {
-        position: naver.maps.Position.BOTTOM_RIGHT,
-      },
-    };
+    navigator.geolocation.getCurrentPosition((position) => {
+      const currentLocation = new naver.maps.LatLng(
+        position.coords.latitude,
+        position.coords.longitude
+      );
 
-    const map = new window.naver.maps.Map("map", mapOptions);
+      const mapOptions = {
+        center: currentLocation,
+        zoom: 16,
+        minZoom: 9,
+        scaleControl: true,
+        mapDataControl: false,
+        logoControlOptions: {
+          position: naver.maps.Position.BOTTOM_RIGHT,
+        },
+      };
 
-    if (onLoad) onLoad(map);
+      const map = new window.naver.maps.Map("map", mapOptions);
+
+      if (onLoad) onLoad(map);
+    });
   };
 
   useEffect(() => {

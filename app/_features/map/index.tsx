@@ -1,33 +1,26 @@
 import Script from "next/script";
 import React, { useEffect, useRef } from "react";
 
-export default function Map({ onLoad }: IMapProps) {
+export default function Map({ onLoad, initialZoom, initialCenter }: IMapProps) {
   const mapId = "map";
 
   const mapRef = useRef<NaverMap | null>(null);
 
   const initializeMap = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const currentLocation = new naver.maps.LatLng(
-        position.coords.latitude,
-        position.coords.longitude
-      );
+    const mapOptions = {
+      center: new window.naver.maps.LatLng(...initialCenter),
+      zoom: initialZoom,
+      minZoom: 9,
+      scaleControl: true,
+      mapDataControl: false,
+      logoControlOptions: {
+        position: naver.maps.Position.BOTTOM_RIGHT,
+      },
+    };
 
-      const mapOptions = {
-        center: currentLocation,
-        zoom: 16,
-        minZoom: 9,
-        scaleControl: true,
-        mapDataControl: false,
-        logoControlOptions: {
-          position: naver.maps.Position.BOTTOM_RIGHT,
-        },
-      };
+    const map = new window.naver.maps.Map("map", mapOptions);
 
-      const map = new window.naver.maps.Map("map", mapOptions);
-
-      if (onLoad) onLoad(map);
-    });
+    if (onLoad) onLoad(map);
   };
 
   useEffect(() => {

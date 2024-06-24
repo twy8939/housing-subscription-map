@@ -1,26 +1,45 @@
+import { usePathname } from "next/navigation";
 import Script from "next/script";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 
-export default function Map({ onLoad, initialZoom, initialCenter }: IMapProps) {
+export default function Map({ onLoad }: IMapProps) {
   const mapId = "map";
+  const pathname = usePathname();
 
   const mapRef = useRef<NaverMap | null>(null);
 
+  const query = useMemo(() => new URLSearchParams(pathname.slice(1)), []);
+
   const initializeMap = () => {
-    const mapOptions = {
-      center: new window.naver.maps.LatLng(...initialCenter),
-      zoom: initialZoom,
-      minZoom: 9,
-      scaleControl: true,
-      mapDataControl: false,
-      logoControlOptions: {
-        position: naver.maps.Position.BOTTOM_RIGHT,
-      },
-    };
+    navigator.geolocation.getCurrentPosition((position) => {
+      const currentLocation: Coordinates = [
+        position.coords.latitude,
+        position.coords.longitude,
+      ];
 
-    const map = new window.naver.maps.Map("map", mapOptions);
+      const center =
+        query.get("lat") && query.get("lng")
+          ? ([
+              Number(query.get("lat")),
+              Number(query.get("lng")),
+            ] as Coordinates)
+          : currentLocation;
 
-    if (onLoad) onLoad(map);
+      const mapOptions = {
+        center: new window.naver.maps.LatLng(...center),
+        zoom: 15,
+        minZoom: 9,
+        scaleControl: true,
+        mapDataControl: false,
+        logoControlOptions: {
+          position: naver.maps.Position.BOTTOM_RIGHT,
+        },
+      };
+
+      const map = new window.naver.maps.Map("map", mapOptions);
+
+      if (onLoad) onLoad(map);
+    });
   };
 
   useEffect(() => {

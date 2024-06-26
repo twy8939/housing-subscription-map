@@ -1,6 +1,8 @@
+import { latlngState } from "@/app/_atoms/map";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 import React, { useEffect, useMemo, useRef } from "react";
+import { useSetRecoilState } from "recoil";
 
 export default function Map({ onLoad }: IMapProps) {
   const mapId = "map";
@@ -8,25 +10,19 @@ export default function Map({ onLoad }: IMapProps) {
 
   const mapRef = useRef<NaverMap | null>(null);
 
+  const setLatlng = useSetRecoilState(latlngState);
+
   const query = useMemo(() => new URLSearchParams(pathname.slice(1)), []);
 
   const initializeMap = () => {
     navigator.geolocation.getCurrentPosition((position) => {
-      const currentLocation: Coordinates = [
-        position.coords.latitude,
-        position.coords.longitude,
-      ];
+      const lat = Number(query.get("lat")) || position.coords.latitude;
+      const lng = Number(query.get("lng")) || position.coords.longitude;
 
-      const center =
-        query.get("lat") && query.get("lng")
-          ? ([
-              Number(query.get("lat")),
-              Number(query.get("lng")),
-            ] as Coordinates)
-          : currentLocation;
+      setLatlng({ lat, lng });
 
       const mapOptions = {
-        center: new window.naver.maps.LatLng(...center),
+        center: new window.naver.maps.LatLng(lat, lng),
         zoom: 15,
         minZoom: 9,
         scaleControl: true,
@@ -37,6 +33,12 @@ export default function Map({ onLoad }: IMapProps) {
       };
 
       const map = new window.naver.maps.Map("map", mapOptions);
+
+      naver.maps.Event.addListener(map, "dragend", () => {
+        const latlng = map.getCenter();
+
+        setLatlng({ lat: latlng.x, lng: latlng.y });
+      });
 
       if (onLoad) onLoad(map);
     });

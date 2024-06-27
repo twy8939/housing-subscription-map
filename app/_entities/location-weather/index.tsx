@@ -1,17 +1,16 @@
-import { fetchWeatherInfo } from "@/app/_api/fetchWeatherInfo";
+"use client";
+
 import React from "react";
 import { find } from "lodash";
 import { SKY_CODE } from "./constants";
-import dayjs from "dayjs";
-import { fetchAirQualityInfo } from "@/app/_api/fetchAirQualityInfo";
+import useAirQualityInfo from "@/app/_hooks/useAirQualityInfo";
+import useWeatherInfo from "@/app/_hooks/useWeatherInfo";
+import useYesterdayWeatherInfo from "@/app/_hooks/useYesterdayWeatherInfo";
 
-export default async function LocationWeather() {
-  const yesterday = dayjs().subtract(1, "day");
-
-  const todayWeather = await fetchWeatherInfo();
-  const yesterdayWeather = await fetchWeatherInfo(yesterday);
-
-  const airQuality = await fetchAirQualityInfo();
+export default function LocationWeather() {
+  const { data: todayWeather } = useWeatherInfo();
+  const { data: yesterdayWeather } = useYesterdayWeatherInfo();
+  const { data: airQuality } = useAirQualityInfo();
 
   const air = Number(find(todayWeather, ["category", "SKY"])?.fcstValue);
   const temper = Number(find(todayWeather, ["category", "T1H"])?.fcstValue);
@@ -20,7 +19,7 @@ export default async function LocationWeather() {
     find(yesterdayWeather, ["category", "T1H"])?.fcstValue
   );
 
-  const temperatureDifference = temper - yesterdayTemper;
+  const temperatureDifference = temper - yesterdayTemper || 0;
 
   return (
     <div className="text-xs flex gap-2 my-1">

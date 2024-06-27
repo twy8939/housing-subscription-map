@@ -2,13 +2,41 @@ import LocationButton from "@/app/_entities/location-button";
 import LocationWeather from "@/app/_entities/location-weather";
 import React from "react";
 import ApplyHomeList from "../applyhome-list";
+import {
+  HydrationBoundary,
+  QueryClient,
+  dehydrate,
+} from "@tanstack/react-query";
+import { fetchWeatherInfo } from "@/app/_api/fetchWeatherInfo";
+import dayjs from "dayjs";
+import { fetchAirQualityInfo } from "@/app/_api/fetchAirQualityInfo";
 
-export default function SidebarContent() {
+export default async function SidebarContent() {
+  const queryClient = new QueryClient();
+  const yesterday = dayjs().subtract(1, "day");
+
+  await queryClient.prefetchQuery({
+    queryKey: ["todayWeather"],
+    queryFn: () => fetchWeatherInfo(),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["yesterdayWeather"],
+    queryFn: () => fetchWeatherInfo(yesterday),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["airQuality"],
+    queryFn: fetchAirQualityInfo,
+  });
+
   return (
     <div className="flex-1 overflow-x-hidden overflow-y-scroll scrollbar-thin">
       <div className="border-b px-6 py-5">
-        <LocationButton />
-        <LocationWeather />
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <LocationButton />
+          <LocationWeather />
+        </HydrationBoundary>
       </div>
       <ApplyHomeList />
     </div>

@@ -37,7 +37,7 @@ export default function Map({ onLoad }: IMapProps) {
       naver.maps.Event.addListener(map, "dragend", () => {
         const latlng = map.getCenter();
 
-        setLatlng({ lat: latlng.x, lng: latlng.y });
+        setLatlng({ lat: latlng.y, lng: latlng.x });
       });
 
       if (onLoad) onLoad(map);

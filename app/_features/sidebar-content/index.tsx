@@ -22,7 +22,7 @@ export default async function SidebarContent() {
 
   await queryClient.prefetchQuery({
     queryKey: ["yesterdayWeather"],
-    queryFn: () => fetchWeatherInfo(yesterday),
+    queryFn: () => fetchWeatherInfo({ date: yesterday }),
   });
 
   await queryClient.prefetchQuery({

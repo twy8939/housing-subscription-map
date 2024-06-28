@@ -1,6 +1,12 @@
 import dayjs, { Dayjs } from "dayjs";
 
-export const fetchWeatherInfo = async (date: Dayjs = dayjs()) => {
+export const fetchWeatherInfo = async ({
+  latlng = { lat: 0, lng: 0 },
+  date = dayjs(),
+}: {
+  latlng?: { lat: number; lng: number };
+  date?: Dayjs;
+} = {}) => {
   const baseUrl =
     "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
   const serviceKey = process.env.NEXT_PUBLIC_API_SERVICE_KEY as string;
@@ -12,8 +18,8 @@ export const fetchWeatherInfo = async (date: Dayjs = dayjs()) => {
     dataType: "JSON",
     base_date: dayjs(date).format("YYYYMMDD"),
     base_time: dayjs().subtract(1, "hour").format("HHmm"),
-    nx: "55",
-    ny: "127",
+    nx: Math.floor(latlng.lat).toString(),
+    ny: Math.floor(latlng.lng).toString(),
   };
 
   const queryString = new URLSearchParams(params).toString();

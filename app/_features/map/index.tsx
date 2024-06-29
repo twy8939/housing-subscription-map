@@ -19,8 +19,6 @@ export default function Map({ onLoad }: IMapProps) {
       const lat = Number(query.get("lat")) || position.coords.latitude;
       const lng = Number(query.get("lng")) || position.coords.longitude;
 
-      setLatlng({ lat, lng });
-
       const mapOptions = {
         center: new window.naver.maps.LatLng(lat, lng),
         zoom: 15,
@@ -33,6 +31,8 @@ export default function Map({ onLoad }: IMapProps) {
       };
 
       const map = new window.naver.maps.Map("map", mapOptions);
+
+      setLatlng({ lat: lat, lng: lng });
 
       naver.maps.Event.addListener(map, "dragend", () => {
         const latlng = map.getCenter();

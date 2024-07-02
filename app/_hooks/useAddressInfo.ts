@@ -1,7 +1,7 @@
 import { useRecoilValue } from "recoil";
-import { fetchAddressInfo } from "../_api/fetchAddressInfo";
 import { useQuery } from "@tanstack/react-query";
 import { latlngState } from "../_atoms/map";
+import { fetchAddressInfo } from "../_api/fetchAddressInfo";
 
 export default function useAddressInfo() {
   const latlng = useRecoilValue(latlngState);

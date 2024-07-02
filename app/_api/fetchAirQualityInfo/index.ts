@@ -1,4 +1,4 @@
-import { evaluatePM10, evaluatePM25 } from "../_shared/airQualityUtils";
+import { evaluatePM10, evaluatePM25 } from "@/app/_shared/airQualityUtils";
 
 export const fetchAirQualityInfo = async () => {
   const baseUrl =

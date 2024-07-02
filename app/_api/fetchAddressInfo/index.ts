@@ -7,7 +7,7 @@ export const fetchAddressInfo = async ({
 }) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/example/map-reversegeocode/v2/gc?coords=128.12345,37.98776`,
+      `http://localhost:3000/example/map-reversegeocode/v2/gc?coords=${lon},${lat}&output=json`,
       {
         headers: {
           "X-NCP-APIGW-API-KEY-ID": process.env.NEXT_PUBLIC_NCP_CLIENT_ID || "",
@@ -21,7 +21,7 @@ export const fetchAddressInfo = async ({
       throw new Error(`Error: ${res.status}`);
     }
 
-    const data = await res.json();
+    const data: IAddressInfo = await res.json();
     return data;
   } catch (error) {
     console.error(error);

@@ -34,11 +34,13 @@ export default function Map({ onLoad }: IMapProps) {
 
       setLatlng({ lat: lat, lng: lng });
 
-      naver.maps.Event.addListener(map, "dragend", () => {
+      const updateLatLng = () => {
         const latlng = map.getCenter();
-
         setLatlng({ lat: latlng.y, lng: latlng.x });
-      });
+      };
+
+      naver.maps.Event.addListener(map, "dragend", updateLatLng);
+      naver.maps.Event.addListener(map, "zoom_changed", updateLatLng);
 
       if (onLoad) onLoad(map);
     });

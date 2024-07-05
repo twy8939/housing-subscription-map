@@ -1,9 +1,11 @@
-import ApplyHomeListItem from "@/app/_entities/applyhome-list-item";
-import React from "react";
-import { fetchApplyhomeInfo } from "@/app/_api/fetchApplyhomeInfo";
+"use client";
 
-async function ApplyHomeList() {
-  const data = await fetchApplyhomeInfo();
+import ApplyHomeListItem from "@/app/_entities/applyhome-list-item";
+import useApplyHomeInfo from "@/app/_hooks/useApplyHomeInfo";
+import React from "react";
+
+export default function ApplyHomeList() {
+  const { data } = useApplyHomeInfo();
 
   return (
     <div className="flex-1 overflow-hidden overflow-y-auto">
@@ -15,5 +17,3 @@ async function ApplyHomeList() {
     </div>
   );
 }
-
-export default ApplyHomeList;

@@ -10,10 +10,16 @@ import {
 import { fetchWeatherInfo } from "@/app/_api/fetchWeatherInfo";
 import dayjs from "dayjs";
 import { fetchAirQualityInfo } from "@/app/_api/fetchAirQualityInfo";
+import { fetchApplyhomeInfo } from "@/app/_api/fetchApplyhomeInfo";
 
 export default async function SidebarContent() {
   const queryClient = new QueryClient();
   const yesterday = dayjs().subtract(1, "day");
+
+  await queryClient.prefetchQuery({
+    queryKey: ["applyhomeInfo"],
+    queryFn: () => fetchApplyhomeInfo(),
+  });
 
   await queryClient.prefetchQuery({
     queryKey: ["todayWeather"],
@@ -31,14 +37,16 @@ export default async function SidebarContent() {
   });
 
   return (
-    <div className="flex-1 overflow-x-hidden overflow-y-scroll scrollbar-thin">
-      <div className="border-b px-6 py-5">
-        <HydrationBoundary state={dehydrate(queryClient)}>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div className="flex-1 overflow-x-hidden overflow-y-scroll scrollbar-thin">
+        <div className="border-b px-6 py-5">
           <LocationButton />
           <LocationWeather />
-        </HydrationBoundary>
+        </div>
+        {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
+        <ApplyHomeList />
+        {/* </HydrationBoundary> */}
       </div>
-      <ApplyHomeList />
-    </div>
+    </HydrationBoundary>
   );
 }

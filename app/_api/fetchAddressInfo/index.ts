@@ -22,6 +22,7 @@ export const fetchAddressInfo = async ({
     }
 
     const data: IAddressInfo = await res.json();
+
     return data;
   } catch (error) {
     console.error(error);

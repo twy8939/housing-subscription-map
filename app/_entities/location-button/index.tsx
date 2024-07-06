@@ -11,7 +11,7 @@ export default function LocationButton() {
   useEffect(() => {
     if (!data) return;
     setArea(`${data?.results[0]?.region.area2.name} 
-        ${data?.results[0].region.area3.name}`);
+        ${data?.results[0]?.region.area3.name}`);
   }, [data]);
 
   return (

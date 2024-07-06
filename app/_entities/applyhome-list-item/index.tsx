@@ -1,6 +1,6 @@
 import React from "react";
 
-export default async function ApplyHomeListItem({ item }: IApplyHomeListProps) {
+export default function ApplyHomeListItem({ item }: IApplyHomeListProps) {
   return (
     <li className="p-6 border-b space-y-1">
       <div className="flex items-center gap-2">

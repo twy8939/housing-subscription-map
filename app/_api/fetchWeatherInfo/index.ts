@@ -7,6 +7,8 @@ export const fetchWeatherInfo = async ({
   latlng?: { lat: number; lng: number };
   date?: Dayjs;
 } = {}) => {
+  if (latlng.lat === 0 || latlng.lng === 0) return;
+
   const baseUrl =
     "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
   const serviceKey = process.env.NEXT_PUBLIC_API_SERVICE_KEY as string;

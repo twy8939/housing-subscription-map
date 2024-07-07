@@ -1,6 +1,7 @@
 "use client";
 
 import useAddressInfo from "@/app/_hooks/useAddressInfo";
+import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 
 export default function LocationButton() {
@@ -9,7 +10,8 @@ export default function LocationButton() {
   const [area, setArea] = useState("");
 
   useEffect(() => {
-    if (!data) return;
+    if (!data || isEmpty(data.results)) return;
+
     setArea(`${data?.results[0]?.region.area2.name} 
         ${data?.results[0]?.region.area3.name}`);
   }, [data]);

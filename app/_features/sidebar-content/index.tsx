@@ -43,9 +43,7 @@ export default async function SidebarContent() {
           <LocationButton />
           <LocationWeather />
         </div>
-        {/* <HydrationBoundary state={dehydrate(queryClient)}> */}
         <ApplyHomeList />
-        {/* </HydrationBoundary> */}
       </div>
     </HydrationBoundary>
   );

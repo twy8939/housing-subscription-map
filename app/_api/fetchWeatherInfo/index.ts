@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 
 export const fetchWeatherInfo = async ({
-  latlng = { lat: 0, lng: 0 },
+  latlng = { lat: 37.5262411, lng: 126.99289439 },
   date = dayjs(),
 }: {
   latlng?: { lat: number; lng: number };

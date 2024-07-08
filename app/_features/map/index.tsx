@@ -1,8 +1,7 @@
-import { latlngState } from "@/app/_atoms/map";
+import { useLatLngStore } from "@/app/_stores/map";
 import { usePathname } from "next/navigation";
 import Script from "next/script";
 import React, { useEffect, useMemo, useRef } from "react";
-import { useSetRecoilState } from "recoil";
 
 export default function Map({ onLoad }: IMapProps) {
   const mapId = "map";
@@ -10,7 +9,7 @@ export default function Map({ onLoad }: IMapProps) {
 
   const mapRef = useRef<NaverMap | null>(null);
 
-  const setLatlng = useSetRecoilState(latlngState);
+  const setLatLng = useLatLngStore((state) => state.setLatLng);
 
   const query = useMemo(() => new URLSearchParams(pathname.slice(1)), []);
 
@@ -30,13 +29,13 @@ export default function Map({ onLoad }: IMapProps) {
         },
       };
 
-      const map = new window.naver.maps.Map("map", mapOptions);
+      const map = new window.naver.maps.Map(mapId, mapOptions);
 
-      setLatlng({ lat: lat, lng: lng });
+      setLatLng(lat, lng);
 
       const updateLatLng = () => {
         const latlng = map.getCenter();
-        setLatlng({ lat: latlng.y, lng: latlng.x });
+        setLatLng(latlng.y, latlng.x);
       };
 
       naver.maps.Event.addListener(map, "dragend", updateLatLng);

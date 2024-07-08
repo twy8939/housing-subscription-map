@@ -1,13 +1,13 @@
 export const fetchAddressInfo = async ({
   lat,
-  lon,
+  lng,
 }: {
   lat: number;
-  lon: number;
+  lng: number;
 }) => {
   try {
     const res = await fetch(
-      `http://localhost:3000/example/map-reversegeocode/v2/gc?coords=${lon},${lat}&output=json`,
+      `http://localhost:3000/example/map-reversegeocode/v2/gc?coords=${lng},${lat}&output=json`,
       {
         headers: {
           "X-NCP-APIGW-API-KEY-ID": process.env.NEXT_PUBLIC_NCP_CLIENT_ID || "",

@@ -1,13 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchWeatherInfo } from "../_api/fetchWeatherInfo";
-import { useRecoilValue } from "recoil";
-import { latlngState } from "../_atoms/map";
+import { useLatLngStore } from "../_stores/map";
 
 export default function useWeatherInfo() {
-  const latlng = useRecoilValue(latlngState);
-
+  const { lat, lng } = useLatLngStore();
   return useQuery({
-    queryKey: ["todayWeather", latlng],
-    queryFn: () => fetchWeatherInfo({ latlng }),
+    queryKey: ["todayWeather", lat, lng],
+    queryFn: () => fetchWeatherInfo({ lat, lng }),
   });
 }

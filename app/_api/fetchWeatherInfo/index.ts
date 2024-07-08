@@ -1,13 +1,15 @@
 import dayjs, { Dayjs } from "dayjs";
 
 export const fetchWeatherInfo = async ({
-  latlng = { lat: 37.5262411, lng: 126.99289439 },
+  lat = 37.5262411,
+  lng = 126.99289439,
   date = dayjs(),
 }: {
-  latlng?: { lat: number; lng: number };
+  lat: number;
+  lng: number;
   date?: Dayjs;
-} = {}) => {
-  if (latlng.lat === 0 || latlng.lng === 0) return;
+}) => {
+  if (lat === 0 || lng === 0) return;
 
   const baseUrl =
     "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";
@@ -20,8 +22,8 @@ export const fetchWeatherInfo = async ({
     dataType: "JSON",
     base_date: dayjs(date).format("YYYYMMDD"),
     base_time: dayjs().subtract(1, "hour").format("HHmm"),
-    nx: Math.floor(latlng.lat).toString(),
-    ny: Math.floor(latlng.lng).toString(),
+    nx: Math.floor(lat).toString(),
+    ny: Math.floor(lng).toString(),
   };
 
   const queryString = new URLSearchParams(params).toString();

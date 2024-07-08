@@ -1,6 +1,7 @@
 "use client";
 
 import Map from "@/app/_features/map";
+import Markers from "@/app/_features/markers";
 import useMap from "@/app/_hooks/useMap";
 import React from "react";
 
@@ -13,6 +14,7 @@ export default function MapSection() {
   return (
     <>
       <Map onLoad={onLoadMap} />
+      <Markers />
     </>
   );
 }

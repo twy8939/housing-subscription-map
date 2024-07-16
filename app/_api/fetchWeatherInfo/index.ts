@@ -5,11 +5,11 @@ export const fetchWeatherInfo = async ({
   lng = 126.99289439,
   date = dayjs(),
 }: {
-  lat: number;
-  lng: number;
+  lat?: number;
+  lng?: number;
   date?: Dayjs;
-}) => {
-  if (lat === 0 || lng === 0) return;
+} = {}) => {
+  if (!lat || !lng || lat === 0 || lng === 0) return;
 
   const baseUrl =
     "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst";

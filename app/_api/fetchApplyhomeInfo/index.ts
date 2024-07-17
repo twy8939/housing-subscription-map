@@ -5,7 +5,7 @@ export const fetchApplyhomeInfo = async (address?: string) => {
 
   const params = {
     serviceKey,
-    "cond[SUBSCRPT_AREA_CODE_NM::EQ]": address || "서울",
+    "cond[SUBSCRPT_AREA_CODE_NM::EQ]": address || "경기",
   };
 
   const queryString = new URLSearchParams(params).toString();

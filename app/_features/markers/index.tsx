@@ -8,7 +8,7 @@ export default function Markers() {
   const { map } = useMapStore();
   const { data } = useApplyHomeInfo();
 
-  if (!map) return <></>;
+  if (!map || !data) return <></>;
   return (
     <>
       {data.data.map((item: IApplyHomeItem) => {

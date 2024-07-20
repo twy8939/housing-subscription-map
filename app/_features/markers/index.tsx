@@ -11,15 +11,17 @@ export default function Markers() {
   if (!map || !data) return <></>;
   return (
     <>
-      {data.data.map((item: IApplyHomeItem) => {
-        return (
-          <Marker
-            map={map}
-            address={item.HSSPLY_ADRES}
-            key={item.HOUSE_MANAGE_NO}
-          />
-        );
-      })}
+      {data.pages.map((page) =>
+        page.data.map((item: IApplyHomeItem) => {
+          return (
+            <Marker
+              map={map}
+              address={item.HSSPLY_ADRES}
+              key={item.HOUSE_MANAGE_NO}
+            />
+          );
+        })
+      )}
     </>
   );
 }

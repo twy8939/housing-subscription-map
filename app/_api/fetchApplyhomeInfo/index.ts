@@ -1,14 +1,19 @@
-export const fetchApplyhomeInfo = async (address?: string) => {
+export const fetchApplyhomeInfo = async (pageParam?: {
+  page?: number;
+  perPage?: number;
+  address?: string;
+}) => {
   const baseUrl =
     "https://api.odcloud.kr/api/ApplyhomeInfoDetailSvc/v1/getAPTLttotPblancDetail";
   const serviceKey = process.env.NEXT_PUBLIC_API_SERVICE_KEY as string;
 
   const params = {
+    ...pageParam,
+    "cond[SUBSCRPT_AREA_CODE_NM::EQ]": pageParam?.address || "",
     serviceKey,
-    "cond[SUBSCRPT_AREA_CODE_NM::EQ]": address || "",
   };
 
-  const queryString = new URLSearchParams(params).toString();
+  const queryString = new URLSearchParams(params as any).toString();
   const url = `${baseUrl}?${queryString}`;
 
   try {
